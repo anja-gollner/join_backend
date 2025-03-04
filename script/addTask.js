@@ -67,14 +67,16 @@ async function addTaskToFirebase(taskData) {
             ...subtask,
             task: taskResponse.id
         }));
-        for (const subtask of subtasks) {
-            const subtasksResponse = await postToDatabase("join/subtasks", subtask);
-            if (subtasksResponse) {
-                handleSuccessfulTaskCreation();
+
+        if (subtasks.length > 0) {
+            for (const subtask of subtasks) {
+                await postToDatabase("join/subtasks", subtask);
             }
         }
+        handleSuccessfulTaskCreation();
     }
 }
+
 
 
 
